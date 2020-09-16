@@ -5,13 +5,13 @@
 library("worrms")
 
 #test with whelk
-worms_id <- worrms::wm_name2id(species_list)
+worms_id <- worrms::wm_name2id_(species_list)
 
 # now get classifcation data
-worms_class_dat <- worrms::wm_classification(worms_id)
+worms_class_dat <- worrms::wm_classification_(worms_id)
 
 
 # get common names
-worms_common_names_dat <- worrms::wm_common_id(worms_id)
+worms_common_names_dat <- worrms::wm_common_id_(worms_id)
 
 #
