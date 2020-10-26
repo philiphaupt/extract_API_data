@@ -12,6 +12,6 @@ worms_class_dat <- worrms::wm_classification_(worms_id)
 
 
 # get common names
-worms_common_names_dat <- worrms::wm_common_id_(worms_id)
+worms_common_names_dat <- worrms::wm_common_id_(worms_id) %>% filter(language == "English")
 
 #
