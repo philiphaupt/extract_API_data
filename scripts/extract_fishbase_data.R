@@ -1,10 +1,11 @@
 # Aim obtain data from fishbase and sealife base for the priority species
-# Done by extracting data from ther RESTful APIs with a switch in the  server
+# Done by extracting data from their RESTful APIs with a switch in the  server
 
 # Required installations:
 # install.packages("rfishbase")
+# install.packages("tidyverse")
 
-# Librararys
+# Librararies
 library("rfishbase")
 library("tidyverse")
 
@@ -16,6 +17,12 @@ options(FISHBASE_API = "https://fishbase.ropensci.org/fishbase")
 species_list <- c("Buccinum undatum", # Whelk
                   "Ostrea edulis", # Native Oyster
                   "Mytilus edulis", # Mussels
+                  "Venerupis pullastra", # carpet shell  - clam
+                  "Ruditapes decussatus",# Grooved Carpetshell 
+                  "Ruditapes philippinarum", # Manila clam or Shortnecked clam
+                  "Callista chione", # Hard clam or smooth clam
+                  "Mercenaria mercenaria", # Hard clam
+                  "Donax trunculus", # wedge clam , other species of Donax too, but not listed here
                   "Pecten maximus", # King scallop
                   "Aequipecten opercularis", # Queen scallop
                   "Cerastoderma edule", # Cockle
@@ -50,9 +57,9 @@ glimpse()
 ## Set the server to Fishbase/or ensure it is set to fish base as opposed to sealife base
 #options(FISHBASE_API = "https://fishbase.ropensci.org/sealifebase")
 #or
-sealife <- load_taxa(server="sealifebase") # loads taxanomic data into cache - speeds up processing, but not required
+sealife <- load_taxa(server="sealifebase") # loads taxonomic data into cache - speeds up processing, but not required
 
-# match the species, and return their data from the cahced sealife data
+# match the species, and return their data from the cached sealife data
 shellfish_phylo <- sealife[c(match(species_list, sealife$Species)),] %>% 
   glimpse() # and show a few records
 rm(sealife)
@@ -61,7 +68,7 @@ shellfish_validated_list <- validate_names(shellfish_phylo$Species, server = "se
 
 shellfish_dat <- species(shellfish_validated_list, server = "sealifebase")
 
-## Join the data and sedlect whicvh columns to retain
+## Join the data and select which columns to retain
 species_dat <-
   bind_rows(shellfish_dat, fish_dat) %>% # done by appending/binding the rows, not select which columns are retained
   select("SpecCode",
